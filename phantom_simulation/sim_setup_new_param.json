@@ -1,0 +1,62 @@
+{
+  "number_simulation": 1,
+  "number_photons": 15000000000,
+  "number_layers": 1,
+  "detector_reflectance": 0,
+  "upper_n": 1.457,
+  "lower_n": 1.457,
+  "source_probe_oblique": 0,
+  "detector_probe_oblique": 0,
+  "probes": {
+    "source": {
+      "NA": 0.37,
+      "radius": 0.075,
+      "angle": 0
+    },
+    "num_SDS": 7,
+    "detectors": [
+      {
+        "pos": 0.8,
+        "NA": 0.12,
+        "radius": 0.02,
+        "angle": 0
+      },
+      {
+        "pos": 1.5,
+        "NA": 0.12,
+        "radius": 0.02,
+        "angle": 0
+      },
+      {
+        "pos": 2.12,
+        "NA": 0.12,
+        "radius": 0.02,
+        "angle": 0
+      },
+      {
+        "pos": 3,
+        "NA": 0.12,
+        "radius": 0.02,
+        "angle": 0
+      },
+      {
+        "pos": 3.35,
+        "NA": 0.12,
+        "radius": 0.02,
+        "angle": 0
+      },
+      {
+        "pos": 4.5,
+        "NA": 0.12,
+        "radius": 0.02,
+        "angle": 0
+      },
+      {
+        "pos": 4.74,
+        "NA": 0.12,
+        "radius": 0.02,
+        "angle": 0
+      }
+    ]
+  }
+}
