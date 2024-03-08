@@ -16,7 +16,7 @@ num_anser_to_generate=10; % number of target spec (true answer)
 num_error_to_generate=15; % number of adding noise to the same, the first one will have no error
 times_to_fitting=20; % number of fitting using different init value
 
-fitting_dir='fitting_cw123456'; % the fitting folder
+fitting_dir='fitting_tr345'; % the fitting folder
 
 do_plot_anyPlot=0; % =1 to plot any plot
 do_plot_individual_fitting=1; % =1 to plot the result of each individual fitting

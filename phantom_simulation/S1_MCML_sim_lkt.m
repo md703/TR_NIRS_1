@@ -12,11 +12,11 @@ clc;clear;close all;
 output_dir='MCML_sim_lkt'; % the already exist output folder, which containing the mus to simuilate
 g=0;
 n=1.457;
-use_multiple_GPU=0; % =1 if you want to use multi-GPU to simulate
-GPU_available=[0 1 1 1 1]; % which GPU on the multi-GPU computer to use
+use_multiple_GPU=1; % =1 if you want to use multi-GPU to simulate
+GPU_available=[1 1]; % which GPU on the multi-GPU computer to use
 do_GPU_setting=0; % =1 if you don't use multi-GPU, and want to use certain GPU
 GPU_index=0; % the index of certain GPU to use, start from 0
-to_sim_index=1:70; % the index to simulate
+to_sim_index=1:6; % the index to simulate
 
 sim_setting_file='sim_setup_new_param.json';
 
@@ -34,7 +34,7 @@ if use_multiple_GPU==1
     GPU_sim_num_count=zeros(1,length(GPU_available));
     can_use_GPU_index=find(GPU_available==1);
     
-    p=parpool('localkao',1+length(can_use_GPU_index));
+    p=parpool('local',1+length(can_use_GPU_index));
     
     spmd
         if labindex==1

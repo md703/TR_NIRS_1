@@ -17,12 +17,12 @@ clc;clear;close all; clearvars -global;
 % add_noise_arr=zeros(1,16);  %0 0 0 0 0 0];
 % fitting_name_arr={'1','2','3','4','1','2','3','4','1','2','3','4','1','2','3','4'}; %'SDS 12 merged no noise',
 
-fitting_dir_arr={'test_fitting_2024-01-13-15-46-39_same_noise'};
-fitting_SDS_dir_arr={'fitting_cw123456_tr234','fitting_cw123456_tr234'};
+fitting_dir_arr={'test_fitting_2024-01-21-12-09-54_new_cw_ANN'};
+fitting_SDS_dir_arr={'fitting_tr123','fitting_tr345'};
 
 fitting_dir_index=[1 1];
-add_noise_arr=[0 1];
-fitting_name_arr={'without additional noise','with additional noise'}; %'SDS 12 merged no noise',
+add_noise_arr=[0 0];
+fitting_name_arr={'123','345'}; %'SDS 12 merged no noise',
 
 % fitting_dir_arr={'test_fitting_2023-12-12-11-59-43'};
 % fitting_SDS_dir_arr={'fitting_cw123456','fitting_cw123456_tr234'};

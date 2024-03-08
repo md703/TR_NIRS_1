@@ -1,0 +1,13 @@
+{
+"MCML_version_K": 3.02,
+"num_photon": 15000000000,
+"sim_time": 277.212,
+"replay_time": 4.63543,
+"sim_speed(photons/s)": 5.32204e+07,
+"sim_GPU": "NVIDIA GeForce RTX 3070",
+"each_photon_weight": 6.44245e+19,
+"number_layers": 1,
+"detect_mode": "ring",
+"num_SDS": 5,
+"SDS_detected_number": [ 3213226 , 1505608 , 860794 , 543058 , 367242 ]
+}

@@ -9,16 +9,20 @@ Last update: 2021/01/17
 clc;clear;close all;
 
 %% param
-num_SDS=7;
-num_to_sim=70; % how many mus set had been simulated
+num_SDS=5;
+num_gate=10;
+num_to_sim=6; % how many mus set had been simulated
 sim_g=0.0; % the g used to simulate the table
 
 input_dir='MCML_sim_lkt'; % the simulated lookup table folder
 output_dir='cal_reflectance_2'; % the output dir to put the reflectance in
 
-sim_wl=(650:2:1000)'; % the wavelength to output simulate spectrum
+sim_wl=800; % the wavelength to output simulate DTOF
+% sim_wl=(650:2:1000)'; % the wavelength to output simulate spectrum
 
-param_dir='epsilon_add7EK'; % the folder containing the OPs of phantoms
+SDS_dist_arr=[1.5 2.2 2.9 3.6 4.3]; % cm
+
+param_dir='epsilon'; % the folder containing the OPs of phantoms
 using_mua_file='mua_FDA_cm.txt'; % the mua file for the phantoms
 using_mus_file='musp_cm.txt'; % the mus file for the phantoms
 
@@ -40,13 +44,15 @@ num_phantom=size(ph_mua_arr,2);
 
 fprintf('Starting loading files: ');
 load_timer=tic;
-sim_PL_arr=cell(length(sim_mus_arr),num_SDS);
+sim_PL_arr=cell(length(sim_mus_arr),num_gate,num_SDS);
 each_photon_weight_arr=[];
 
 for mus=1:length(sim_mus_arr)
     temp=load(fullfile(input_dir,['run_' num2str(mus)],'sim_PL_merge.mat'));
     for s=1:num_SDS
-        sim_PL_arr{mus,s}=temp.PL_arr{s};
+        for g=1:num_gate
+            sim_PL_arr{mus,g,s}=temp.PL_arr{g,s};
+        end
     end
     each_photon_weight_arr(mus,:)=temp.each_photon_weight_arr;
 end
@@ -59,31 +65,34 @@ for i=1:num_phantom
     ph_spec_arr=[];
 end
 
+figure('Units','pixels','Position',[0 0 1920 360]);
+ti=tiledlayout(1,num_SDS);
 for s=1:num_SDS
+    nexttile;
     fprintf('run SDS %d\n',s);
     for i=1:num_phantom
-        temp_mus_ref_arr=zeros(length(sim_mus_arr),length(ph_mua_arr(:,i))); % sim lut mus * num of ph mua;
-        for mus=1:length(sim_mus_arr)
-            temp_mus_ref_arr(mus,:)=sum(sim_PL_arr{mus,s}(:,1).*exp(-1*sim_PL_arr{mus,s}(:,2).*transpose(ph_mua_arr(:,i))),1)./each_photon_weight_arr(mus,s);
+        for g=1:num_gate
+            ref_arr(i,g,s)=sum(sim_PL_arr{i,g,s}(:,1).*exp(-1*sim_PL_arr{i,g,s}(:,2).*transpose(ph_mua_arr(:,i))),1)./each_photon_weight_arr(mus,s);
         end
-        for wl=1:length(sim_wl)
-            fprintf('\tph %d wl %d\n',i,wl);
-            temp_mus_ref=smooth(temp_mus_ref_arr(:,wl));
-            int_ref=interp1(sim_mus_arr,temp_mus_ref,ph_mus_arr(wl,i),'pchip');
-            plot(sim_mus_arr,temp_mus_ref,ph_mus_arr(wl,i),int_ref,'x');
-            title(['ph ' num2str(i) ' wl ' num2str(wl) ' SDS ' num2str(s)]);
-            set(gca,'YScale','log');
-            drawnow;
-            ph_spec_arr{i}(wl,s)=int_ref;
-        end
+
+        plot(1:1:num_gate,ref_arr(i,:,s),'Linewidth',2);
+        hold on
+        set(gca,'YScale','log');
+        ph_dtof_arr{i}(:,s)=squeeze(ref_arr(i,:,s));
+        
     end
+    title(['SDS ' num2str(SDS_dist_arr(s)) ' cm']);
+    xlabel('Time gate');
+    ylabel('reflectance');
+    legend('ph1','ph2','ph3','ph4','ph5','ph6');
 end
+print(fullfile(input_dir,'plot_phantom_spec.png'),'-dpng','-r200');
 
 %% save
 mkdir(input_dir,output_dir);
 for i=1:num_phantom
-    to_save=[sim_wl ph_spec_arr{i}];
-    save(fullfile(input_dir,output_dir,['phantom_' num2str(i) '_spec.txt']),'to_save','-ascii','-tabs');
+    to_save=ph_dtof_arr{i};
+    save(fullfile(input_dir,output_dir,['phantom_' num2str(i) '_dtof.txt']),'to_save','-ascii','-tabs');
 end
 
 copyfile(fullfile(param_dir,using_mua_file),fullfile(input_dir,output_dir,using_mua_file));

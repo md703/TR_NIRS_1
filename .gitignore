@@ -1,3 +1,4 @@
+*.asv
 /1_0_Find_probe_pos/models
 /1_0_Find_probe_pos/models_above_FP2
 /1_0_Find_probe_pos/models_on_FP2
@@ -37,6 +38,8 @@
 /1_5_ANN_training/ZJ_2023-11-01-14-22-50
 /1_5_ANN_training/WH_2023-11-14-21-59-44
 
+/1_6_caliberation/20240306
+
 /1_7_ANN_fitting_no_mask_no_weight/initValue_database_2
 /1_7_ANN_fitting_no_mask_no_weight/KB
 /1_7_ANN_fitting_no_mask_no_weight/model_arrange
@@ -62,6 +65,7 @@
 
 /20230710_cal_sensitivity/PL_1.mat
 /20230710_cal_sensitivity/model_arrange
+/20230710_cal_sensitivity/New Folder
 
 /20230928_Smooth_test/1_3_MCX_lookup_table_smooth_test/KB_378
 /20230928_Smooth_test/1_3_MCX_lookup_table_smooth_test/KB_high_scattering

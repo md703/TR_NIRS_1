@@ -12,7 +12,7 @@ global target_spec orig_target_spec target_dtof;
 global num_SDS_cw num_SDS_tr SDS_choosed_cw SDS_choosed_tr A_Krange SDS_sim_correspond_cw SDS_sim_correspond_tr num_gate gate_choosed gate_sim_correspond;
 
 %% param
-subject_name_arr={'KB','WH','ZJ'}; %,'WH','ZJ'
+subject_name_arr={'KB'}; %,'WH','ZJ'
 num_anser_to_generate=10; % number of target spec (true answer)
 num_error_to_generate=15; % number of adding noise to the same, the first one will have no error
 times_to_fitting=20; % number of fitting using different init value
@@ -25,7 +25,7 @@ fitting_wl_tr=810;
 model_dir='model_arrange';
 
 %% CW setting
-cw_flag=1;
+cw_flag=0;
 num_SDS_cw=6; % how many SDS are in the target spectrum
 
 if cw_flag
@@ -34,13 +34,13 @@ if cw_flag
 end
 
 %% TR setting
-tr_flag=0;
+tr_flag=1;
 num_SDS_tr=5;
 num_gate=10;
 
 % SDS
 if tr_flag
-    SDS_choosed_tr=[2 3 4]; % the SDS chosen to fitted in the target spectrum 
+    SDS_choosed_tr=[1 2 3]; % the SDS chosen to fitted in the target spectrum 
     SDS_sim_correspond_tr=[1 2 3 4 5]; % the SDS index in the simulated spectrum corresponding to each SDS in the target spectrum, SDS_sim_correspond(x)=y means 'measure x = sim y'
 
     % choose gate or not

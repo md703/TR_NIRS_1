@@ -1,0 +1,13 @@
+{
+"MCML_version_K": 3.02,
+"num_photon": 15000000000,
+"sim_time": 343.615,
+"replay_time": 7.42596,
+"sim_speed(photons/s)": 4.27301e+07,
+"sim_GPU": "NVIDIA GeForce RTX 3060 Ti",
+"each_photon_weight": 6.44245e+19,
+"number_layers": 1,
+"detect_mode": "ring",
+"num_SDS": 5,
+"SDS_detected_number": [ 3912380 , 1867236 , 1073837 , 690438 , 472481 ]
+}

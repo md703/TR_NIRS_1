@@ -7,7 +7,7 @@ global lambda net param_range
 error_range_threshold=0.005; % plot the fitting in this distance to the best result
 max_choose_number=1; % the max number of fitting
 
-input_dir='test_fitting_2024-01-13-15-46-39_same_noise'; % please move the fitting folders into this folder first.
+input_dir='test_fitting_2024-01-21-12-09-54_new_cw_ANN'; % please move the fitting folders into this folder first.
 subject_name_arr={'KB'};%'KB','WH','WW'
 num_anser_to_generate=10; % number of target spec (true answer)
 

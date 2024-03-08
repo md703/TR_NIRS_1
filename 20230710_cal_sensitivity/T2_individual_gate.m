@@ -9,9 +9,9 @@ clear; close all;
 global tr_net tr_param_range;
 
 gate_checked=[3 5 7];
-plot_individual=1;
+plot_individual=0;
 
-baseline=[0.2 0.15 0.4 150 180 150]; %  [0.275 0.2 0.3 160 125 150] [0.2 0.3 0.2 150 125 150] today:[0.15 0.25 0.3 150 125 150] [0.275 0.2 0.25 160 125 150] [0.15 0.15 0.2 120 75 125] [0.35 0.25 0.3 200 175 175]
+baseline=[0.15 0.15 0.2 120 75 125];%[0.15 0.25 0.13 150 125 150]; %[0.25 0.18 0.13 125 109 130]; %[0.275 0.2 0.3 160 125 150] [0.2 0.3 0.2 150 125 150] today:[0.15 0.25 0.3 150 125 150] [0.275 0.2 0.25 160 125 150] [0.15 0.15 0.2 120 75 125] [0.35 0.25 0.3 200 175 175]
 changerate_to_exam=[-20 -10 10 20];
 subject_name_arr={'KB','ZJ','WH'}; % 'KB',,'ZJ','WH'
 interp_folder={'KB_test2_2023-07-17-13-27-58'}; %'KB_test1_2023-07-10-18-40-48'
@@ -49,11 +49,11 @@ end
 for i=1:size(mu_param_arr,1)
     mu_param_arr_save(i,:)=[mu_param_arr(i,1) mu_param_arr(i,2) 0.042 mu_param_arr(i,3) mu_param_arr(i,4) mu_param_arr(i,5) 23 mu_param_arr(i,6)];
 end
-save('OP_sim_sen.txt','mu_param_arr','-ascii','-tabs');
+save('OP_sim_sen.txt','mu_param_arr_save','-ascii','-tabs');
 
 
 %% Calculate senstivity per subject
-dtof=zeros(length(gate_checked),num_SDS,size(mu_param_arr,1));
+dtof=zeros(num_gate,num_SDS,size(mu_param_arr,1));
 temp_dtof=zeros(num_gate,num_SDS);
 
 use_ANN=1; % ANN=1, interpolation=0
@@ -67,7 +67,7 @@ for sbj=1:length(subject_name_arr)
             for s=1:num_SDS
                 temp_dtof(:,s)=temp_dtof_((s-1)*num_gate+1:s*num_gate)';
             end
-            dtof(:,:,i,sbj)=temp_dtof(gate_checked,:);
+            dtof(:,:,i,sbj)=temp_dtof;
             spec(:,i,sbj)=sum(temp_dtof,1);
         end
     else 
@@ -77,7 +77,7 @@ for sbj=1:length(subject_name_arr)
             for s=1:num_SDS
                 temp_dtof(:,s)=temp_dtof_((s-1)*num_gate+1:(s-1)*num_gate+num_gate)';
             end
-            dtof(:,:,i,sbj)=temp_dtof(gate_checked,:);
+            dtof(:,:,i,sbj)=temp_dtof;
         end
     end
     
@@ -86,37 +86,37 @@ for sbj=1:length(subject_name_arr)
 
     %% Plot reflectance change
     if plot_individual
-%         for g=1:length(gate_checked)
-%             f=figure('Position',[0 0 1920 1080]);
+        for g=1:length(gate_checked)
+            f=figure('Position',[0 0 1920 1080]);
 %             set(f,'visible','off');
-%             ti=tiledlayout(6,num_SDS);%(3,4)
-%             for l=1:size(baseline,2)
-%                 for s=1:num_SDS
-%                     nexttile;
-%                     ind=4*(l-1)+2;
-% 
-%                     plot(changerate_to_exam,squeeze(dtof(g,s,ind:ind+3,sbj)),'-o');
-% 
-%                     xlabel(title_arr(l));
-%                     ylabel('reflectance');
-%                     title(['SDS' num2str(s)]);
-%                 end
-%             end
-%             title(ti,['Gate ' num2str(gate_checked(g)) ' ' subject_name_arr{sbj}]);
-% 
-%             if use_ANN==1
-%                 print(fullfile('results',['gate' num2str(gate_checked(g)) '_reflectance_' subject_name_arr{sbj} '.png']),'-dpng','-r200');
-%             else
-%                 print(fullfile('results',['relative_change_interp_' subject_name_arr{sbj} '.png']),'-dpng','-r200');
-%             end
-%         end
+            ti=tiledlayout(6,num_SDS);%(3,4)
+            for l=1:size(baseline,2)
+                for s=1:num_SDS
+                    nexttile;
+                    ind=4*(l-1)+2;
+
+                    plot(changerate_to_exam,squeeze(dtof(gate_checked(g),s,ind:ind+3,sbj)),'-o');
+
+                    xlabel(title_arr(l));
+                    ylabel('reflectance');
+                    title(['SDS' num2str(s)]);
+                end
+            end
+            title(ti,['Gate ' num2str(gate_checked(g)) ' ' subject_name_arr{sbj}]);
+
+            if use_ANN==1
+                print(fullfile('results',['gate' num2str(gate_checked(g)) '_reflectance_' subject_name_arr{sbj} '.png']),'-dpng','-r200');
+            else
+                print(fullfile('results',['relative_change_interp_' subject_name_arr{sbj} '.png']),'-dpng','-r200');
+            end
+        end
     end
     
 
     %% Calculate sensitivity
     
     % calculate relative change
-    relative_change_tr=zeros(length(gate_checked),num_SDS,size(mu_param_arr,1)-1);
+    relative_change_tr=zeros(num_gate,num_SDS,size(mu_param_arr,1)-1);
     relative_change_cw=zeros(num_SDS,size(mu_param_arr,1)-1);
 
     for i=2:size(mu_param_arr,1)
@@ -124,6 +124,40 @@ for sbj=1:length(subject_name_arr)
         relative_change_cw(:,i-1)=spec(:,i,sbj)./spec(:,1,sbj)-1;
     end
     
+    f=figure('Position',[0 0 1920 1080]);
+    ti=tiledlayout(num_SDS,6);%(3,4)
+    for s=1:num_SDS
+        for l=1:size(baseline,2)
+            nexttile;
+            ind=4*(l-1)+1;
+            max_value=max(relative_change_tr(:,:,[ind:ind+3]),[],'all');
+            min_value=min(relative_change_tr(:,:,[ind:ind+3]),[],'all');
+            for ch=1:4
+                plot(1:1:num_gate,relative_change_tr(:,s,ind));
+                ind=ind+1;
+                hold on;
+            end
+            xlabel('Time gate');
+            ylabel('\DeltaR/R_{b}');
+            xticks(1:10);
+            xlim([1 10]);
+            ylim([min_value max_value]);
+            title(['SDS' num2str(s) ',' title_arr{l}]);
+    %         ylim(ylim_arr{l});
+        end
+    end
+    leg = legend('-20%','-10%','10%','20%','Orientation','horizontal');
+    leg.Layout.Tile = 'south';
+    title(ti,subject_name_arr{sbj});
+    
+    if use_ANN==1
+        print(fullfile('results',['relative_change_' subject_name_arr{sbj} '.png']),'-dpng','-r200');
+    else
+        print(fullfile('results',['relative_change_interp_' subject_name_arr{sbj} '.png']),'-dpng','-r200');
+    end
+    
+    
+    relative_change_tr=relative_change_tr(gate_checked,:,:);
     % calculate sensitivity
     for i=1:length(baseline)
         index=1+length(changerate_to_exam)*(i-1);

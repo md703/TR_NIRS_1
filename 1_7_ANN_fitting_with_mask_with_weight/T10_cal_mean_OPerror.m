@@ -13,14 +13,14 @@ global lambda net param_range
 error_range_threshold=0.005; % plot the fitting in this distance to the best result
 max_choose_number=1; % the max number of fitting
 
-input_dir='test_fitting_2024-01-13-15-46-39_same_noise'; % please move the fitting folders into this folder first.
-subject_name_arr={'KB','WH','ZJ'};%,'WH','ZJ'
-do_use_add_error=1; % if =1, calculate the OP error of the added noise results; if =0, calculate the error without noise
+input_dir='test_fitting_2024-01-21-12-09-54_new_cw_ANN'; % please move the fitting folders into this folder first.
+subject_name_arr={'KB'};%,'WH','ZJ'
+do_use_add_error=0; % if =1, calculate the OP error of the added noise results; if =0, calculate the error without noise
 num_anser_to_generate=10; % number of target spec (true answer)
 num_error_to_generate=15; % number of adding noise to the same, the first one will have no error
 times_to_fitting=20; % number of fitting using different init value
 
-fitting_dir='fitting_cw123456';
+fitting_dir='fitting_tr345';
 
 % mode=2; % Fitting mode 1:TR+CW, 2:TR, 3:CW
 

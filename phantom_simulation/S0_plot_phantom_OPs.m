@@ -14,6 +14,8 @@ mua_file='mua_FDA_cm.txt';
 mus_file='musp_cm.txt';
 num_phantom=6;
 
+sim_wl=800;
+
 fontSize=18;
 lineWidth=2;
 
@@ -28,8 +30,8 @@ ti=tiledlayout('flow','TileSpacing','compact','Padding','none');
 
 % mua
 nexttile();
-temp_param=load(fullfile(OP_dir,mua_file));
-plot(temp_param(:,1),temp_param(:,2:end),'LineWidth',lineWidth);
+temp_mua=load(fullfile(OP_dir,mua_file));
+plot(temp_mua(:,1),temp_mua(:,2:end),'LineWidth',lineWidth);
 legend(legend_arr,'Location','northwest');
 % title('\mu_a (1/cm)');
 grid on;
@@ -39,8 +41,8 @@ set(gca,'fontsize',fontSize, 'FontName', 'Times New Roman');
 
 % musp
 nexttile();
-temp_param=load(fullfile(OP_dir,mus_file));
-plot(temp_param(:,1),temp_param(:,2:end),'LineWidth',lineWidth);
+temp_mus=load(fullfile(OP_dir,mus_file));
+plot(temp_mus(:,1),temp_mus(:,2:end),'LineWidth',lineWidth);
 legend(legend_arr,'Location','northeast');
 grid on;
 xlabel('wavelength(nm)');
@@ -48,3 +50,9 @@ ylabel('\mu_s''(1/cm)');
 set(gca,'fontsize',fontSize, 'FontName', 'Times New Roman');
 
 print(fullfile(OP_dir,'plot_phantom_OP.png'),'-dpng','-r200');
+
+% print the mus of wavelength want to simulate
+
+mus_to_sim=interp1(temp_mus(:,1),temp_mus(:,2:end),sim_wl);
+save(fullfile('MCML_sim_lkt','mus_to_sim.txt'),'mus_to_sim','-ascii','-tabs');
+
