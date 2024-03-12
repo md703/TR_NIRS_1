@@ -10,8 +10,10 @@ clc; clear; close all;
 
 %% param
 input_dir='20201209_test_14'; % the folder of the experiment
-num_SDS=6;
-SDS_dist_arr=[0.8 1.5 2.12 3 3.35 4.5 4.74]; % cm
+num_SDS=5;
+num_gate=10;
+
+SDS_dist_arr=[1.5 2.2 2.9 3.6 4.3]; % cm
 
 calib_mode=1; % 1=MCML, 2=MCX
 
@@ -35,7 +37,7 @@ ti=tiledlayout(1,2,'TileSpacing','compact','Padding','none');
 
 % RMSPE
 nexttile();
-plot(calib_result.wl_interval,calib_result.all_RMSPE_arr(:,:,end),'LineWidth',lineWidth);
+plot(1:num_gate,calib_result.all_RMSPE_arr(:,:,end),'LineWidth',lineWidth);
 xlabel('Wavelength(nm)');
 ylabel('Calibrated RMSPE');
 % ytickformat('%.2f%%');
@@ -46,7 +48,7 @@ set(gca,'fontsize',fontSize, 'FontName', 'Times New Roman');
 
 %% RR
 nexttile();
-plot(calib_result.wl_interval,calib_result.RR_arr(:,:,end),'LineWidth',lineWidth);
+plot(1:num_gate,calib_result.RR_arr(:,:,end),'LineWidth',lineWidth);
 xlabel('Wavelength(nm)');
 ylabel('Calibrated r^2 value');
 grid on;

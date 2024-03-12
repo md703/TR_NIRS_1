@@ -1,16 +1,21 @@
 %{
-Read the *.phu files and save them as 'info_record.mat' and 'TPSF.mat'
+Read the *.phu files and save them as 'info_record.mat' and 'TPSF_collect.mat'
 
 Ting-Yi Kuo
-Last update: 2024/03/07
+Last update: 2024/03/11
 %}
 
 clc;clear;close all;
 
 %% param
-folderPath='20240306';
+folderPath='Test_data_20240308';
+
+num_phantom=2;
+num_SDS=2;
+repeat_times=2; % how many times of measurements each phantom and SDS
+
 info_record=[];
-TPSF_orig=[];
+TPSF_collect=[];
 
 %% init
 fileList=dir(fullfile(folderPath,'*.phu'));
@@ -127,25 +132,53 @@ for f=1:length(fileNames)
     info_record(f,2)=HistResDscr_HistogramBins(i);      % Number of time bins
     info_record(f,3)=Peak;                              % Peak count
     info_record(f,4)=HistResDscr_IntegralCount(i);      % Integral count
-    TPSF_orig(:,f)=Counts;
+    TPSF_collect(:,f)=Counts;
 
     
     fclose(fid);
 end
 
-%% display the histogram(s)
-figure(1);
-semilogy(TPSF_orig);
-% axis([0 max(max(Channels)) 1 10*max(max(Counts))]);
-xlabel('# of time bins');
-ylabel('Counts');
-legend(fileNames);
+%% saving TPSF to IRF/BG/target
+bg={};
+for s=1:num_SDS
+    for t=1:repeat_times
+        fid=find(strcmp(fileNames, ['bg_SDS' num2str(s) '_' num2str(t) '.phu']));
+        if isempty(fid)
+            error(['bg_SDS' num2str(s) '_' num2str(t) '.phu not exist!']);
+        end 
+        bg{s}(:,t)=TPSF_collect(:,fid);
+    end
+end
+
+IRF={};
+for s=1:num_SDS
+    for t=1:repeat_times
+        fid=find(strcmp(fileNames,['IRF_SDS' num2str(s) '_' num2str(t) '.phu']));
+        if isempty(fid)
+            error(['IRF_SDS' num2str(s) '_' num2str(t) '.phu not exist!']);
+        end 
+        IRF{s}(:,t)=TPSF_collect(:,fid);
+    end
+end
+
+TPSF_orig={};
+for p=1:num_phantom
+    for s=1:num_SDS
+        for t=1:repeat_times
+            fid=find(strcmp(fileNames,['p' num2str(p) '_SDS' num2str(s) '_' num2str(t) '.phu']));
+            if isempty(fid)
+                error(['p' num2str(p) '_SDS' num2str(s) '_' num2str(t) '.phu not exist!']);
+            end 
+            TPSF_orig{p,s}(:,t)=TPSF_collect(:,fid);
+        end
+    end
+end
 
 %% save the data and information
 rowLabels={'Time bin resolution','Number of time bins','Peak count','Integral count'};
 info_record=array2table(info_record, 'RowNames', fileNames, 'VariableNames', rowLabels);
 
 save(fullfile(folderPath,'info_record.mat'),'info_record');
-save(fullfile(folderPath,'TPSF_collect.mat'),'TPSF_collect');
+save(fullfile(folderPath,'TPSF_collect.mat'),'IRF','bg','TPSF_orig');
 
 fprintf('Done!\n');

@@ -92,7 +92,7 @@ print(fullfile(input_dir,'plot_phantom_spec.png'),'-dpng','-r200');
 mkdir(input_dir,output_dir);
 for i=1:num_phantom
     to_save=ph_dtof_arr{i};
-    save(fullfile(input_dir,output_dir,['phantom_' num2str(i) '_dtof.txt']),'to_save','-ascii','-tabs');
+    save(fullfile(input_dir,output_dir,['phantom_' num2str(i) '_TPSF.txt']),'to_save','-ascii','-tabs');
 end
 
 copyfile(fullfile(param_dir,using_mua_file),fullfile(input_dir,output_dir,using_mua_file));
