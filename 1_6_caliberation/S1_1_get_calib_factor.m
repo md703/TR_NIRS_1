@@ -26,8 +26,8 @@ calib_mode_arr={'MCML','MCX'};
 simulate_folder_arr={'phantom_simulation_MCML_FDA_7EK_2_dilated','phantom_simulation_MCX'}; % the folders contain the siulation spectrum of the phantoms
 sim_prefix_arr={'phantom_','effective_reflectance_ph_'}; % the file name prefix of the simulated spectrum file in the folder
 sim_postfix_arr={'_TPSF',''}; % the file name postfix of the simulated spectrum file in the folder
-sim_ph_index=[1 2 3 4 5 6]; % the index of the simulated phantom corresponding to the measured phantom
-sim_SDS_index=[1 2 3 4 5 6]; % the SDS in the simulated spectrum correspond to the measured spectrum
+sim_ph_index=[1 2]; % the index of the simulated phantom corresponding to the measured phantom
+sim_SDS_index=[1 2 3 4 5]; % the SDS in the simulated spectrum correspond to the measured spectrum
 num_phantom_in_interval=3; % for the closest phantom calibration, how many phantoms to consider in one reflectance interval
 
 
@@ -70,7 +70,7 @@ colormap_arr=parula(num_phantom+1);
 for fi=1:length(folder_arr)
     
     %% for flat phantom
-    load(fullfile(folder_arr{fi},'TPSF_processed.mat'));    % load measured data
+    load(fullfile(folder_arr{fi},'phantom_TPSF_processed.mat'));    % load measured data
     
     simulate_folder=simulate_folder_arr{calib_mode};        % load phantom simulation data
     
