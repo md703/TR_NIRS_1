@@ -545,11 +545,11 @@ for wl=wl_start_index:size(tissue_param,1)
         %% save output file
         detPL_state=whos('SDS_detpt_arr');
         if detPL_state.bytes/1024^2>500 % if the file will be too large
-            save(fullfile(output_folder,['PL_' num2str(wl) '.mat']),'SDS_detpt_arr_orig','SDS_detpt_arr','each_photon_weight_arr','-v7.3');
+            save(fullfile(output_folder,['PL_' num2str(wl) '.mat']),'SDS_detpt_arr','each_photon_weight_arr','-v7.3'); %,'SDS_detpt_arr_orig'
         else
-            save(fullfile(output_folder,['PL_' num2str(wl) '.mat']),'SDS_detpt_arr_orig','SDS_detpt_arr','each_photon_weight_arr');
+            save(fullfile(output_folder,['PL_' num2str(wl) '.mat']),'SDS_detpt_arr','each_photon_weight_arr');
             if exist(fullfile(output_folder,['PL_' num2str(wl) '.mat']),'file')==0
-                save(fullfile(output_folder,['PL_' num2str(wl) '.mat']),'SDS_detpt_arr_orig','SDS_detpt_arr','each_photon_weight_arr','-v7.3');
+                save(fullfile(output_folder,['PL_' num2str(wl) '.mat']),'SDS_detpt_arr','each_photon_weight_arr','-v7.3');
             end
         end
         

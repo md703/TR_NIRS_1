@@ -11,7 +11,11 @@ clc;clear;close all;
 %% param
 input_dir='MCML_sim_lkt'; % the simulated lookup table folder
 num_SDS=5;
-num_gate=10;
+num_gate=200;
+cfg.tstep=0.025E-9;
+% cfg.tstep=5E-10;
+cfg.tend=5E-9;
+
 num_layer=1;
 max_CV=0.005; % the max cv of each group
 min_detpt=10000; % the min number of detected photon
@@ -44,8 +48,6 @@ for i=1:length(folder_list)
             temp_PL=fun_load_binary_pathlength_output(sum_file,s,fullfile(input_dir,folder_list{i},['pathlength_SDS_' num2str(s) '.bin']));
             assert(size(temp_PL,1)==sim_sum.SDS_detected_number(s));
             
-            cfg.tstep=5E-10;
-            cfg.tend=5E-9;
             detpt_PL_arr=fun_MCX_det_time(temp_PL,cfg,num_gate);
             PL_arr(:,s)=detpt_PL_arr;
             
@@ -54,7 +56,14 @@ for i=1:length(folder_list)
             group_CV_arr{s}=[1 0];
             
         end
-        save(fullfile(input_dir,folder_list{i},'sim_PL_merge.mat'),'PL_arr','each_photon_weight_arr','divide_times_arr');
+        
+        
+        detPL_state=whos('PL_arr');
+        if detPL_state.bytes/1024^2>500 % if the file will be too large
+            save(fullfile(input_dir,folder_list{i},'sim_PL_merge.mat'),'PL_arr','each_photon_weight_arr','divide_times_arr','-v7.3');
+        else
+            save(fullfile(input_dir,folder_list{i},'sim_PL_merge.mat'),'PL_arr','each_photon_weight_arr','divide_times_arr');
+        end
         save(fullfile(input_dir,folder_list{i},'group_CV_arr.mat'),'group_CV_arr');
 %         for s=1:num_SDS
 %             delete(fullfile(input_dir,folder_list{i},['pathlength_SDS_' num2str(s) '.bin']));
@@ -63,3 +72,8 @@ for i=1:length(folder_list)
         fprintf('\n');
     end
 end
+
+%% 
+% for i=1:length(folder_list)
+%     movefile(fullfile(input_dir,folder_list{i},'old_summary.json'),fullfile(input_dir,folder_list{i},'summary.json')) 
+% end

@@ -16,12 +16,12 @@ clc;clear;close all;
 
 %% param
 lookup_table_arr='../1_3_MCX_lookup_table'; % the dir containing the unmerged lookup table
-subject_name_arr={'KB'}; % the name of the subjects
+subject_name_arr={'CT'}; % the name of the subjects
 
 num_layer=4; % number of layer to random
 setting_r=0.2; % the radius of true detector, in mm
 
-% mus boundary around 800nm  
+% mus boundary around 800nm
 % mus_ub=[225 200 23 250]; % 1/cm
 % mus_lb=[100 50 23 50]; % 1/cm
 
@@ -29,8 +29,8 @@ setting_r=0.2; % the radius of true detector, in mm
 mus_ub=[250 225 23 275]; % 1/cm, skip CSF
 mus_lb=[75 25 23 25]; % 1/cm, skip CSF
 
-mua_ub=[0.45 0.3 0.042 0.4]; % 1/cm
-mua_lb=[0.1 0.1 0.042 0.1]; % 1/cm
+mua_ub=[0.5 0.35 0.042 0.5]; % 1/cm
+mua_lb=[0.1 0.05 0.042 0.05]; % 1/cm
 
 
 % about random
@@ -43,7 +43,7 @@ num_total=num_SDS*num_gate;
 
 max_mua_sameTime=10; % how many mua set to calculate at the same time, use smaller value for smaller memory consumption
 
-test_mode=0; % =0 to generate the whole training data; =1 or more to generate the result of lookup table using the testing parameters
+test_mode=2; % =0 to generate the whole training data; =1 or more to generate the result of lookup table using the testing parameters
 
 
 for sbj_i=1:length(subject_name_arr)
@@ -103,7 +103,7 @@ for sbj_i=1:length(subject_name_arr)
 
     %% test
     if test_mode==1
-        layer_mus={100,50,23,[50:10:250]};
+        layer_mus={225,200,23,[50:10:250]};
         mus_param_arr=[];
         for i=1:length(layer_mus{1})
             for j=1:length(layer_mus{4})
@@ -112,14 +112,14 @@ for sbj_i=1:length(subject_name_arr)
         end
         
         % specify the index of mua combination you want to use in mua_param_arr
-        index=1331;
-        mua_param_arr=mua_param_arr(index,:); %[0.45 0.3 0.042 0.4]
+        index=1001;
+        mua_param_arr=mua_param_arr(index,:);
         mua_param_arr=repmat(mua_param_arr,size(mus_param_arr,1),1);
         
     elseif test_mode==2
-        op=load('OP_sim_sen.txt');
-        mus_param_arr=op(:,5:8);
-        mua_param_arr=op(:,1:4);
+        mus_param_arr=[225,200,23,150];
+        index=1001;
+        mua_param_arr=mua_param_arr(index,:);
     elseif test_mode==3
         op=load('OPs_to_sim_11/toSim_OP_66.txt');
         mus_param_arr=op(:,2:2:8);

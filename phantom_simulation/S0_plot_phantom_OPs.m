@@ -53,6 +53,9 @@ print(fullfile(OP_dir,'plot_phantom_OP.png'),'-dpng','-r200');
 
 % print the mus of wavelength want to simulate
 
-mus_to_sim=interp1(temp_mus(:,1),temp_mus(:,2:end),sim_wl);
+% mus_to_sim=interp1(temp_mus(:,1),temp_mus(:,2:end),sim_wl);
+
+mus_to_sim=1:1:40;
+
 save(fullfile('MCML_sim_lkt','mus_to_sim.txt'),'mus_to_sim','-ascii','-tabs');
 

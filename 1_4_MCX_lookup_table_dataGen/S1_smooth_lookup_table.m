@@ -1,9 +1,9 @@
 %{
 Smooth the mcx lookup table with designated mua parameter set
 
-This code will save files and figures in ./smooth_result/{subject_name}:
-'lkt_ref_value_arr_bs.mat'-look up table value before smoothing
-'lkt_ref_value_arr_as.mat'-look up table value after smoothing
+This code will save files and figures in ./results_smooth/{subject_name}:
+'lkt_ref_value_arr_bs.mat'-lookup table value before smoothing
+'lkt_ref_value_arr_as.mat'-lookup table value after smoothing
 'mua_param_arr.mat'-mua set used for smoothing 
 'in_place_arr'
 
@@ -15,7 +15,7 @@ clc;clear;close all;
 
 %% param
 lookup_table_arr='../1_3_MCX_lookup_table'; % the dir containing the unmerged lookup table
-subject_name_arr={'KB'}; % the name of the subjects
+subject_name_arr={'CT'}; % the name of the subjects
 
 
 % mus boundary around 800nm  
@@ -23,11 +23,11 @@ subject_name_arr={'KB'}; % the name of the subjects
 % mus_lb=[100 50 23 50]; % 1/cm
 
 % actual simulation of mus boundary
-mus_ub=[250 225 275]; % 1/cm, skip CSF
-mus_lb=[75 25 25]; % 1/cm, skip CSF
+mus_ub=[250 225 23 275]; % 1/cm, skip CSF
+mus_lb=[75 25 23 25]; % 1/cm, skip CSF
 
-mua_ub=[0.45 0.3 0.042 0.4]; % 1/cm
-mua_lb=[0.1 0.1 0.042 0.1]; % 1/cm
+mua_ub=[0.5 0.35 0.042 0.5]; % 1/cm
+mua_lb=[0.1 0.05 0.042 0.05]; % 1/cm
 
 num_SDS=5;
 num_gate=10;
@@ -85,8 +85,8 @@ for sbj_i=1:length(subject_name_arr)
         mua_param_arr(:,L)=(random_index_arr(:,L)+normal_cutoff)/(2*normal_cutoff)*(mua_ub(L)-mua_lb(L))+mua_lb(L);
     end
     
-%     mua_param_arr=[mua_param_arr;mua_ub];
-    mua_param_arr=[mua_ub];
+    mua_param_arr=[mua_param_arr; mua_ub];
+
 
     %% find the index in the lookup table, which is a 4-D array, which dimention is the mus for one layer, and each value is the corresponding index in a 1-D array
     in_place_arr=zeros(length(lkt_layer_mus{1}),length(lkt_layer_mus{2}),length(lkt_layer_mus{3}),length(lkt_layer_mus{4}));
@@ -167,8 +167,8 @@ for sbj_i=1:length(subject_name_arr)
     %% Smooth setting
     close all;
     
-    mus_array={'\mu_{s,scalp}','\mu_{s,skull}','\mu_{s,GM}'};
-    mua_array={'\mu_{a,scalp}','\mu_{a,skull}','\mu_{a,GM}'};
+    mus_array={'\mu_{s,scalp}','\mu_{s,skull}','\mu_{s,CSF}','\mu_{s,GM}'};
+    mua_array={'\mu_{a,scalp}','\mu_{a,skull}','\mu_{a,CSF}','\mu_{a,GM}'};
     tissue_arr={'scalp','skull','GM'};
     SDS_array=[1.5 2.2 2.9 3.6 4.3];
     subplot_arr=[1 4 2 5 3 6];
@@ -178,7 +178,7 @@ for sbj_i=1:length(subject_name_arr)
     %% Smooth
     
     % for polyfitn
-    [x, y, z] = meshgrid(mus_lb(2):25:mus_ub(2),mus_lb(1):25:mus_ub(1), mus_lb(3):25:mus_ub(3));
+    [x, y, z] = meshgrid(mus_lb(2):25:mus_ub(2),mus_lb(1):25:mus_ub(1), mus_lb(4):25:mus_ub(4));
     x=x(:);
     y=y(:);
     z=z(:);
@@ -190,7 +190,7 @@ for sbj_i=1:length(subject_name_arr)
         lkt_ref_value_arr_as=lkt_ref_value_arr_as.lkt_ref_value_arr_as;
         fprintf('Finish loading lkt_rf_value_arr_as.mat\n');
     else
-        for mua_i=1:size(mua_param_arr,1) % choose which mua to fix
+        for mua_i=1:size(mua_param_arr,1) % choose which mua to 3*
             fprintf('Smoothing each mua set %d/%d\n',mua_i,size(mua_param_arr,1));
             for s=1:num_total
                 now_SDS=ceil(s/num_gate);
@@ -448,12 +448,12 @@ for sbj_i=1:length(subject_name_arr)
     
     % plot the simulation result separately
 
-    for s=[41 45] %21:50
+    for s=21:50
         if rem(s,num_gate)==1
-%             figure('Units','pixels','position',[0 0 1920 1080]);
-%             ti=tiledlayout(3,10);
-            figure('Units','pixels','position',[0 0 960 540]);
-            ti=tiledlayout("flow");
+            figure('Units','pixels','position',[0 0 1920 1080]);
+            ti=tiledlayout(3,10);
+%             figure('Units','pixels','position',[0 0 960 540]);
+%             ti=tiledlayout("flow");
         end
 
         now_SDS=ceil(s/num_gate);
@@ -466,7 +466,7 @@ for sbj_i=1:length(subject_name_arr)
         lkt_4D_as=lkt_value(in_place_arr);
 
         if rem(s,num_gate)<11 % only plot gate1~6 rem(s,num_gate)>0 && rem(s,num_gate)<7
-            for mus=1:3
+            for mus=[1 2 4]
                 if mus==1
                     if hs_or_ls_or_mid==0
                         to_plot_orig=squeeze(lkt_4D_bs(:,8,1,10));
@@ -492,7 +492,7 @@ for sbj_i=1:length(subject_name_arr)
                         to_plot_smooth=squeeze(lkt_4D_as(4,:,1,6))';
     %                             to_plot_true_sk=dtof_arrange_sk(:,9+(now_SDS-1)*num_gate:8+now_SDS*num_gate);
                     end
-                elseif mus==3
+                elseif mus==4
                     if hs_or_ls_or_mid==0
                         to_plot_orig=squeeze(lkt_4D_bs(7,8,1,:))';
                         to_plot_smooth=squeeze(lkt_4D_as(7,8,1,:))';
@@ -507,11 +507,17 @@ for sbj_i=1:length(subject_name_arr)
                         to_plot_true_gm=dtof_arrange_ms(:,8+now_gate+(now_SDS-1)*num_gate);
                     end
                 end
-                nexttile(now_gate+10*(mus-1));
+                
+                if mus==4
+                    nexttile(now_gate+10*(mus-1-1));
+                else
+                    nexttile(now_gate+10*(mus-1));
+                end
+                
                 plot(mus_lb(mus):25:mus_ub(mus),to_plot_orig,'--o','Linewidth',linewidth);
                 hold on
                 plot(mus_lb(mus):25:mus_ub(mus),to_plot_smooth,'-o','Linewidth',linewidth);
-                if mus==3
+                if mus==4
                     hold on
                     plot(mus_lb(mus):25:mus_ub(mus),to_plot_true_gm,'-o','Linewidth',linewidth);
                 end
@@ -581,7 +587,7 @@ for sbj_i=1:length(subject_name_arr)
                 print(fullfile(output_dir,['b_fixed_GM_' num2str(i) '_SDS' num2str(SDS_array(now_SDS)) 'cm_Gate ' num2str(s-num_gate*(now_SDS-1)) '.png']),'-dpng','-r200');
             end
 
-            [X,Y] = meshgrid(mus_lb(1):25:mus_ub(1),mus_lb(3):25:mus_ub(3));
+            [X,Y] = meshgrid(mus_lb(1):25:mus_ub(1),mus_lb(4):25:mus_ub(4));
             for i=1:size(lkt_4D_bs,2)
                 f=figure('Units','pixels','position',[0 0 640 540]);
                 surf(X,Y,squeeze(lkt_4D_bs(:,i,1,:))','EdgeColor','None');
@@ -593,7 +599,7 @@ for sbj_i=1:length(subject_name_arr)
                 print(fullfile(output_dir,['b_fixed_skull_' num2str(i) '_SDS' num2str(SDS_array(now_SDS)) 'cm_Gate ' num2str(s-num_gate*(now_SDS-1)) '.png']),'-dpng','-r200');
             end
 
-            [X,Y] = meshgrid(mus_lb(2):25:mus_ub(2),mus_lb(3):25:mus_ub(3));
+            [X,Y] = meshgrid(mus_lb(2):25:mus_ub(2),mus_lb(4):25:mus_ub(4));
             for i=1:size(lkt_4D_bs,1)
                 f=figure('Units','pixels','position',[0 0 640 540]);
                 surf(X,Y,squeeze(lkt_4D_bs(i,:,1,:))','EdgeColor','None');
@@ -620,7 +626,7 @@ for sbj_i=1:length(subject_name_arr)
                 print(fullfile(output_dir,['a_fixed_GM_' num2str(i) '_SDS' num2str(SDS_array(now_SDS)) 'cm_Gate ' num2str(s-num_gate*(now_SDS-1)) '.png']),'-dpng','-r200');
             end
 
-            [X,Y] = meshgrid(mus_lb(1):25:mus_ub(1),mus_lb(3):25:mus_ub(3));
+            [X,Y] = meshgrid(mus_lb(1):25:mus_ub(1),mus_lb(4):25:mus_ub(4));
             for i=1:size(lkt_4D_as,2)
                 f=figure('Units','pixels','position',[0 0 640 540]);
                 surf(X,Y,squeeze(lkt_4D_as(:,i,1,:))','EdgeColor','None');
@@ -632,7 +638,7 @@ for sbj_i=1:length(subject_name_arr)
                 print(fullfile(output_dir,['a_fixed_skull_' num2str(i) '_SDS' num2str(SDS_array(now_SDS)) 'cm_Gate ' num2str(s-num_gate*(now_SDS-1)) '.png']),'-dpng','-r200');
             end
 
-            [X,Y] = meshgrid(mus_lb(2):25:mus_ub(2),mus_lb(3):25:mus_ub(3));
+            [X,Y] = meshgrid(mus_lb(2):25:mus_ub(2),mus_lb(4):25:mus_ub(4));
             for i=1:size(lkt_4D_as,1)
                 f=figure('Units','pixels','position',[0 0 640 540]);
                 surf(X,Y,squeeze(lkt_4D_as(i,:,1,:))','EdgeColor','None');

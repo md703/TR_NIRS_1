@@ -10,7 +10,7 @@ clc;clear;close all;
 %% param
 model_folder='models';
 % subject_name_arr={'KB','BY','CT','TY','CS'};
-subject_name_arr={'KB'};
+subject_name_arr={'KB','ZJ','CT','BY','TY','WH','WW'};
 
 to_plot_figure=1; % plot the probe position and direction or not
 
@@ -18,17 +18,17 @@ num_SDS=5; % number of detectors
 %     SDS_x_arr=[0.8 1.5 1.5 3 3 4.5 4.5]; % the SDS x displacement (cm)
 %     SDS_z_arr=[0 0 -1.5 0 -1.5 0 -1.5]; % the SDS z displacement (cm)
 
-% SDS_x_arr=[-1.5 0 0.7 1.4 2.1 2.8]; % the SDS x displacement (cm) to Fp2, the 1st is the source
-% SDS_z_arr=[1.5 1.5 1.5 1.5 1.5 1.5]; % the SDS z displacement (cm) to Fp2, the 1st is the source
-% reference_index_arr=[1 3 4 4 5 5 5]; % the reference EEG point for each detector on the head, ['Fp2h','Fp2','AFp8','AF8','AFF8']
+SDS_x_arr=[-1.5 0 0.7 1.4 2.1 2.8]; % the SDS x displacement (cm) to Fp2, the 1st is the source
+SDS_z_arr=[1.5 1.5 1.5 1.5 1.5 1.5]; % the SDS z displacement (cm) to Fp2, the 1st is the source
+reference_index_arr=[1 3 4 4 5 5 5]; % the reference EEG point for each detector on the head, ['Fp2h','Fp2','AFp8','AF8','AFF8']
 
 % SDS_x_arr=[0 1.5 2.2 2.9 3.6 4.3]; % the SDS x displacement (cm) to Fp2, the 1st is the source
-% SDS_z_arr=[0 0 0 0 0 0]; % the SDS z displacement (cm) to Fp2, the 1st is the source
+% SDS_z_arr=[1.5 1.5 1.5 1.5 1.5 1.5]; % the SDS z displacement (cm) to Fp2, the 1st is the source
 % reference_index_arr=[2 4 4 4 5 5]; % the reference EEG point for each detector on the head, ['Fp2h','Fp2','AFp8','AF8','AFF8']
 
-SDS_x_arr=[0 0.8 1.5 1.5 3 3 4.5 -1.5 0 0.7 1.4 2.1 2.8]; % the SDS x displacement (cm) to Fp2, the 1st is the source
-SDS_z_arr=[0.75 0.75 0.75 -0.75 0.75 -0.75 0.75 1.5 1.5 1.5 1.5 1.5 1.5]; % the SDS z displacement (cm) to Fp2, the 1st is the source
-reference_index_arr=[3 4 4 4 5 5 6 1 3 4 4 5 5 5]; % the reference EEG point for each detector on the head, ['Fp2h','Fp2','AFp8','AF8','AFF8']
+% SDS_x_arr=[0 0.8 1.5 1.5 3 3 4.5 -1.5 0 0.7 1.4 2.1 2.8]; % the SDS x displacement (cm) to Fp2, the 1st is the source
+% SDS_z_arr=[0.75 0.75 0.75 -0.75 0.75 -0.75 0.75 1.5 1.5 1.5 1.5 1.5 1.5]; % the SDS z displacement (cm) to Fp2, the 1st is the source
+% reference_index_arr=[3 4 4 4 5 5 6 1 3 4 4 5 5 5]; % the reference EEG point for each detector on the head, ['Fp2h','Fp2','AFp8','AF8','AFF8']
 
 %% main
 for sbj=1:length(subject_name_arr)

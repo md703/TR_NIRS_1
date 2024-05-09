@@ -22,9 +22,9 @@ for sbj = 1
         %% Calculate reflectance
         load(fullfile(sbj_arr{sbj},['sim_' num2str(sim)],'PL_1.mat'));
         
-%         target_mua=[ 4.6000000e-01	   2.3501063e-01	   4.2000000e-02	   4.2879307e-01];
 %         target_mua=[0.6 0.45 0.1 0.5 0.25];
         target_mua=[0.450000000000000 0.300000000000000 0.0420000000000000 0.400000000000000 0.20000000000000];
+        target_mua=[0.2750  0.2000  0.0420  0.2500];
         target_mua(:,5)=target_mua(:,4)*0.5;
         target_mua(:,6)=0;
         

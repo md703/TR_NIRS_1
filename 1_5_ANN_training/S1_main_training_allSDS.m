@@ -10,9 +10,9 @@ clc;clear;close all;
 
 %% param
 
-subject_name_arr={'WH'}; % the name of the subject
+subject_name_arr={'CT'}; % the name of the subject
 input_mother_dir='../1_4_MCX_lookup_table_dataGen'; % the folder of the lookup table forward training data
-input_dir_arr={'WH_2023-11-14-21-53-01'}; % the lut folder of each subject
+input_dir_arr={'CT_2024-04-20-20-50-59'}; % the lut folder of each subject
 
 for sbj_i=1:length(subject_name_arr)
     clearvars -except subject_name_arr input_mother_dir input_dir_arr sbj_i;
@@ -114,17 +114,17 @@ for sbj_i=1:length(subject_name_arr)
     
     layers=[sequenceInputLayer(6,'Name','')
 %         fullyConnectedLayer(650)
-        fullyConnectedLayer(850) %850
+        fullyConnectedLayer(1000) %1000
         leakyReluLayer
     %     reluLayer
 %         fullyConnectedLayer(450)
-        fullyConnectedLayer(550) %550
+        fullyConnectedLayer(800) %800
         leakyReluLayer
     %     reluLayer
-        fullyConnectedLayer(300) %300
+        fullyConnectedLayer(400) %400
         leakyReluLayer
     %     reluLayer
-        fullyConnectedLayer(150) %150
+        fullyConnectedLayer(200) %200
         leakyReluLayer
     %     reluLayer
         fullyConnectedLayer(50)

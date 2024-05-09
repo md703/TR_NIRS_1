@@ -10,7 +10,7 @@ Version: 4.41
 clc;clear;close all;
 %% param
 model_folder='models'; % the folder of the models
-target_name_arr={'KB'}; % the name of the model to simulate
+target_name_arr={'BY'}; % the name of the model to simulate
 num_photon=2E11; % the number of photon
 num_SDS=5; % number of detectors
 layer_mus={[100,225],[50,200],23,[25:25:275]}; % mus for each layer, 1/cm
@@ -33,15 +33,15 @@ end
     
 % simulation setting
 sim_set.num_SDS=num_SDS;
-sim_set.detector_r=[1.5 1.5 1.5 1.5 1.5]'; % mm
-sim_set.detector_larger_r=sim_set.detector_r.*2;
-sim_set.detector_NA=ones(sim_set.num_SDS,1)*0.26;
+sim_set.detector_r=[2.08 2.08 2.08 2.08 2.08]'; % mm
+sim_set.detector_larger_r=sim_set.detector_r; %sim_set.detector_r.*2;
+sim_set.detector_NA=ones(sim_set.num_SDS,1)*0.39;
 sim_set.fiber_n=1.457;
 sim_set.num_photon=num_photon;
-sim_set.photon_per_simulation=1E8;%200000000;
+sim_set.photon_per_simulation=1E9;%200000000;
 sim_set.mcx_max_detpt=6E7;
 sim_set.source_type='cone';
-sim_set.source_NA=0.26;
+sim_set.source_NA=0.39;
 sim_set.source_r=0;
 
 

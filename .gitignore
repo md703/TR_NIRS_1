@@ -1,4 +1,13 @@
 *.asv
+2024*/
+IRF/
+MCML_sim*/
+PL*/
+*.bin
+BY/
+KB/
+CT/
+
 /1_0_Find_probe_pos/models
 /1_0_Find_probe_pos/models_above_FP2
 /1_0_Find_probe_pos/models_on_FP2
@@ -17,6 +26,8 @@
 /1_3_MCX_lookup_table/WW
 /1_3_MCX_lookup_table/ZJ
 /1_3_MCX_lookup_table/models_ZJ_setting
+CT*/
+/1_3_MCX_lookup_table_old
 
 /1_4_MCX_lookup_table_dataGen/KB
 /1_4_MCX_lookup_table_dataGen/KB_2023-10-16-20-18-50
@@ -31,6 +42,7 @@
 /1_4_MCX_lookup_table_dataGen/ZJ
 /1_4_MCX_lookup_table_dataGen/ZJ_2023-11-01-14-06-20
 /1_4_MCX_lookup_table_dataGen/ZJ_test1_2023-11-01-14-17-15
+/1_4_MCX_lookup_table_dataGen_old
 
 /1_5_ANN_training/KB_2023-10-11-20-35-47
 /1_5_ANN_training/KB_interpolation_result_cw

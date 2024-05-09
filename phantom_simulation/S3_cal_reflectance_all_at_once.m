@@ -14,7 +14,7 @@ num_gate=10;
 num_to_sim=6; % how many mus set had been simulated
 sim_g=0.0; % the g used to simulate the table
 
-input_dir='MCML_sim_lkt'; % the simulated lookup table folder
+input_dir='MCML_sim_lkt_2'; % the simulated lookup table folder
 output_dir='cal_reflectance_2'; % the output dir to put the reflectance in
 
 sim_wl=800; % the wavelength to output simulate DTOF
@@ -72,7 +72,7 @@ for s=1:num_SDS
     fprintf('run SDS %d\n',s);
     for i=1:num_phantom
         for g=1:num_gate
-            ref_arr(i,g,s)=sum(sim_PL_arr{i,g,s}(:,1).*exp(-1*sim_PL_arr{i,g,s}(:,2).*transpose(ph_mua_arr(:,i))),1)./each_photon_weight_arr(mus,s);
+            ref_arr(i,g,s)=sum(sim_PL_arr{i,g,s}(:,1).*exp(-1*sim_PL_arr{i,g,s}(:,2).*transpose(ph_mua_arr(:,i))),1)./each_photon_weight_arr(i,s);
         end
 
         plot(1:1:num_gate,ref_arr(i,:,s),'Linewidth',2);

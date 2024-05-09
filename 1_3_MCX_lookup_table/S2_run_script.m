@@ -11,5 +11,5 @@ clc;clear;close all;
 to_save=0;
 save('stop_flag.txt','to_save','-ascii','-tabs');
 
-fun_MCX_run_lookup('KB');
+fun_MCX_run_lookup('BY');
 % fun_MCX_run_lookup('WW');

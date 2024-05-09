@@ -5,11 +5,11 @@ Benjamin Kao
 Last update: 2020/12/23
 %}
 
-clc;clear;close all;
+% clc;clear;close all;
 
 %% param
-model_dir={'KB_2023-10-11-20-35-47','WH_2023-11-14-21-59-44','ZJ_2023-11-01-14-22-50'}; % the model train folder
-% model_dir_arr=load('model_dir.mat'); % the model train folder
+model_dir={'KB_2023-10-11-20-35-47'}; % the model train folder %,'WH_2023-11-14-21-59-44','ZJ_2023-11-01-14-22-50'
+% model_dir_arr=load('model_dir.mat'); % the model train folder 
 
 num_SDS=5;
 num_gate=10;
@@ -23,8 +23,9 @@ for i=1:length(model_dir) %)size(model_dir_arr.model_dir,1)
     fun_ANN_init(model_dir{i});
     
     %% test 1
-    op=[0.2750  162.5000  0.2000  125.0000  0.0420  23.0000  0.2500  150.0000];
-    spec=fun_ANN_forward(op);
+%     op=[0.2750  162.5000  0.2000  125.0000  0.0420  23.0000  0.2500  150.0000];
+    op=[0.45  250  0.3  225  0.0420  23.0000  0.4  275];
+    spec=fun_ANN_forward(op,1);
     
     figure;
     tiledlayout('flow');

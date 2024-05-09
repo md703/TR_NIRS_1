@@ -16,7 +16,7 @@ use_multiple_GPU=1; % =1 if you want to use multi-GPU to simulate
 GPU_available=[1 1]; % which GPU on the multi-GPU computer to use
 do_GPU_setting=0; % =1 if you don't use multi-GPU, and want to use certain GPU
 GPU_index=0; % the index of certain GPU to use, start from 0
-to_sim_index=1:6; % the index to simulate
+to_sim_index=1:40; % the index to simulate
 
 sim_setting_file='sim_setup_new_param.json';
 

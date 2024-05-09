@@ -9,7 +9,7 @@ clc;%clear;close all;
 
 
 %% param
-subject_name_arr={'ZJ','WH'};
+subject_name_arr={'CT'};
 lookup_table_arr='../1_3_MCX_lookup_table'; % the dir containing the unmerged lookup table
 
 bs_value=[];
@@ -51,10 +51,10 @@ for sbj_i=1:length(subject_name_arr)
     load(fullfile(output_dir,'lkt_ref_value_arr_bs.mat'));
     load(fullfile(output_dir,'lkt_ref_value_arr_as.mat'));
     
-    bs_value=[bs_value; squeeze(lkt_ref_value_arr_bs(index_ms,size(lkt_ref_value_arr_bs,2),:))];
+    bs_value=[bs_value; squeeze(lkt_ref_value_arr_bs(index_ls,size(lkt_ref_value_arr_bs,2),:))];
     bs_value=[bs_value; squeeze(lkt_ref_value_arr_bs(index_hs,size(lkt_ref_value_arr_bs,2),:))];
     
-    as_value=[as_value; squeeze(lkt_ref_value_arr_as(index_ms,size(lkt_ref_value_arr_as,2),:))];
+    as_value=[as_value; squeeze(lkt_ref_value_arr_as(index_ls,size(lkt_ref_value_arr_as,2),:))];
     as_value=[as_value; squeeze(lkt_ref_value_arr_as(index_hs,size(lkt_ref_value_arr_as,2),:))];
     
     mus_table = load(fullfile(subject_name,'mus_table.txt'));
@@ -80,13 +80,6 @@ as=as_value(:,[1:30 32:40 42:50]);
 orig_rmspe=sqrt(mean(((bs-true_)./true_).^2,'all'));
 smooth_rmspe=sqrt(mean(((as-true_)./true_).^2,'all'));
 
-% true_=true_value(:,[1:5 11:15 21:25 32:36 42:46]); % skip gate 1 data
-% bs=bs_value(:,[1:5 11:15 21:25 32:36 42:46]);
-% as=as_value(:,[1:5 11:15 21:25 32:36 42:46]);
-% 
-% orig_rmspe=sqrt(mean(((bs-true_)./true_).^2));
-% smooth_rmspe=sqrt(mean(((as-true_)./true_).^2));
-
 
 plot([min_ref max_ref],[min_ref max_ref]);
 hold on;
@@ -99,8 +92,7 @@ title({['Original RMSPE = ' num2str(100*orig_rmspe) '%'];['RMSPE = ' num2str(100
 
 xlim([min_ref max_ref]);
 ylim([min_ref max_ref]);
-% xlim([-48 -15]);
-% ylim([-48 -15]);
+
 xlabel('ground truth');
 ylabel('reflectance');
 legend([p1,p2],{'original value','denoised value'},'Location','northwest');
@@ -114,10 +106,10 @@ print(fullfile('results_smooth','smooth_result.png'),'-dpng','-r200');
 mus_ub=[250 225 23 275]; % 1/cm, skip CSF
 mus_lb=[75 25 23 25]; % 1/cm, skip CSF
 
-lkt_value=lkt_ref_value_arr_bs(:,1331,36);
+lkt_value=lkt_ref_value_arr_bs(:,1001,36);
 lkt_4D_bs=lkt_value(in_place_arr);
 
-lkt_value=lkt_ref_value_arr_as(:,1331,36);
+lkt_value=lkt_ref_value_arr_as(:,1001,36);
 lkt_4D_as=lkt_value(in_place_arr);
 
 

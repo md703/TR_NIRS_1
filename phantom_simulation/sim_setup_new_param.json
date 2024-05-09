@@ -9,40 +9,40 @@
   "detector_probe_oblique": 0,
   "probes": {
     "source": {
-      "NA": 0.26,
-      "radius": 0.054,
+      "NA": 0.39,
+      "radius": 0.208,
       "angle": 0
     },
     "num_SDS": 5,
     "detectors": [
       {
         "pos": 1.5,
-        "NA": 0.26,
-        "radius": 0.054,
+        "NA": 0.39,
+        "radius": 0.09,
         "angle": 0
       },
       {
         "pos": 2.2,
-        "NA": 0.26,
-        "radius": 0.054,
+        "NA": 0.39,
+        "radius": 0.09,
         "angle": 0
       },
       {
         "pos": 2.9,
-        "NA": 0.26,
-        "radius": 0.054,
+        "NA": 0.39,
+        "radius": 0.09,
         "angle": 0
       },
       {
         "pos": 3.6,
-        "NA": 0.26,
-        "radius": 0.054,
+        "NA": 0.39,
+        "radius": 0.09,
         "angle": 0
       },
       {
         "pos": 4.3,
-        "NA": 0.26,
-        "radius": 0.054,
+        "NA": 0.39,
+        "radius": 0.09,
         "angle": 0
       }
     ]

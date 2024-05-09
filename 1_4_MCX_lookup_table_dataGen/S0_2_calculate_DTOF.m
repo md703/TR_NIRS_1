@@ -13,7 +13,7 @@ Version: 4.41
 num_SDS=5;
 num_gate=10;
 
-sbj_arr = {'WH'};
+sbj_arr = {'CT'};
 for sbj = 1
     mus_table = load(fullfile(sbj_arr{sbj},'mus_table.txt'));
 %     step=1;
@@ -24,7 +24,7 @@ for sbj = 1
         
 %         target_mua=[ 4.6000000e-01	   2.3501063e-01	   4.2000000e-02	   4.2879307e-01];
 %         target_mua=[0.6 0.45 0.1 0.5 0.25];
-        target_mua=[0.450000000000000 0.300000000000000 0.0420000000000000 0.400000000000000 0.20000000000000];
+        target_mua=[0.5 0.35 0.042 0.5];
         target_mua(:,5)=target_mua(:,4)*0.5;
         target_mua(:,6)=0;
         
