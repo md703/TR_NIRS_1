@@ -39,11 +39,6 @@ reference_point_arr={'Fp2h','Fp2','AFp8','AF8','AFF8','F8'; ...
 
 other_reference_point_arr={'Fp1','AFp7','AF7','AFF7','NFp1','AFp9h','AF9h','AFF9h'}; % the reference points used to find the sphere
 
-% reference_point_arr={'AFp8','Fp2','Fp2h','Fpz','Fp1h','Fp1','AFp7','AF7','AFF7','F7'; ...
-%                      'AFp10h','NFp2','NFp2h','NFpz','NFp1h','NFp1','AFp9h','AF9h','AFF9h','F9h'}; % the reference points to find the location of the probes
-% 
-% other_reference_point_arr={'AF8','AFF8','F8','FFT8','AF10h','AFF10h','F10h','FFT10h'};
-
 
 % plot the reference points
 if do_plot_ref
