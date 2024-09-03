@@ -1,7 +1,6 @@
 # Phantom simulation
+Simulate the phantom spectrum. Create a lookup table to fit the experimental data of phantoms.
 
-Simulate the phantom spectrum.
-Create a lookup table to fit the experimental data of phantoms.
 ---
 
 ## Prepare
