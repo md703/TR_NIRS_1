@@ -6,43 +6,26 @@ Quantify the optical parameters of the phantoms and compare them with the previo
 ## Prepare
 * The measured data saved as below structure.
     
-    └── 20240612
 
-        ├── IRF_530  (530 is the laser intensity you used to measure the data. Using same intensity with different SDS and phantoms will be more convenient, just in case you need to use different intensity)
-
-        │   ├── IRF1
-
-        │   │   ├── IRF1_1.phu
-
-        │   │   ├── IRF1_2.phu
-
-        │   │   └── IRF1_3.phu
-
-        │   ├── IRF2
-
-        │   │   ├── IRF2_1.phu
-
-        │   │   ├── IRF2_2.phu
-
-        │   │   └── IRF2_3.phu
-
-        └── phantom_2_530
-
-            ├── SDS1
-
-            │   ├── SDS1_1.phu
-
-            │   ├── SDS1_2.phu
-
-            │   └── SDS1_3.phu
-
-            └── SDS2
-
-                ├── SDS2_1.phu
-
-                ├── SDS2_2.phu
-
-                └── SDS2_3.phu
+        └── 20240612
+            ├── IRF_530  (530 is the laser intensity you used to measure the data. Using same intensity with different SDS and phantoms will be more convenient, just in case you need to use different intensity)
+            │   ├── IRF1
+            │   │   ├── IRF1_1.phu
+            │   │   ├── IRF1_2.phu
+            │   │   └── IRF1_3.phu
+            │   ├── IRF2
+            │   │   ├── IRF2_1.phu
+            │   │   ├── IRF2_2.phu
+            │   │   └── IRF2_3.phu
+            └── phantom_2_530
+                ├── SDS1
+                │   ├── SDS1_1.phu
+                │   ├── SDS1_2.phu
+                │   └── SDS1_3.phu
+                └── SDS2
+                    ├── SDS2_1.phu
+                    ├── SDS2_2.phu
+                    └── SDS2_3.phu
 
 * The previously quantified OP results and the simulated DTOFs of the phantoms. Saved in `1_ph_info`.
 * Use `2_1_phantom_simulation` to make the lookup table for accelerating the process of quantifting the OPs of phantoms.
