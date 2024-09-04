@@ -15,7 +15,7 @@ target_mother_folder='20240507/phantom_3';
 target_folder={'SDS1_0.25s','SDS1_1.5s','SDS1_15s'}; %
 fitting_phantom=3;
 
-num_SDS=1;
+num_SDS=2;
 num_gate=200;
 
 %% init
