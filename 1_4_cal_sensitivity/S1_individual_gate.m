@@ -2,18 +2,19 @@
 Set the change rate for target layer to test the sensitivity of different SDS and gate
 
 Ting-Yi Kuo
-Last update: 2023/07/11
+Last update: 2024/07/11
 %}
 
 clear; close all;
+%% param
 global tr_net tr_param_range;
 
 gate_checked=[3 5 7];
 plot_individual=0;
 
-baseline=[0.15 0.15 0.2 120 75 125];%[0.15 0.25 0.13 150 125 150]; %[0.25 0.18 0.13 125 109 130]; %[0.275 0.2 0.3 160 125 150] [0.2 0.3 0.2 150 125 150] today:[0.15 0.25 0.3 150 125 150] [0.275 0.2 0.25 160 125 150] [0.15 0.15 0.2 120 75 125] [0.35 0.25 0.3 200 175 175]
+baseline=[0.15 0.15 0.2 120 75 125];
 changerate_to_exam=[-20 -10 10 20];
-subject_name_arr={'KB','ZJ','WH'}; % 'KB',,'ZJ','WH'
+subject_name_arr={'KB','ZJ','WH'}; % 'KB','CT','BY'
 interp_folder={'KB_test2_2023-07-17-13-27-58'}; %'KB_test1_2023-07-10-18-40-48'
 model_dir='model_arrange';
 title_arr={'\mu_{a,scalp}','\mu_{a,skull}','\mu_{a,GM}','\mu_{s,scalp}','\mu_{s,skull}','\mu_{s,GM}'};
